@@ -1,0 +1,197 @@
+openapi: 3.0.3
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3000/api'
+paths:
+  /createTask:
+    post:
+      summary: Создает новую задачу на указанный день
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                date:
+                  type: string
+      responses:
+        200:
+          description: успех
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  text:
+                    type: string
+                  date:
+                    type: string
+                  done:
+                    type: boolean
+        500:
+          description: какая-то ошибка
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /getTasks:
+    post:
+      summary: возвращает список задач с указанным статусом выполнения
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                page:
+                  type: number
+                  description: номер страницы
+                count:
+                  type: number
+                  description: количество элементов на странице
+                done:
+                  type: boolean
+                  description: статус выполнения
+      responses:
+        200:
+          description: успех
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    text:
+                      type: string
+                    date:
+                      type: string
+                    done:
+                      type: boolean
+        500:
+          description: какая-то ошибка
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        404:
+          description: страница не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /setDone:
+    patch:
+      summary: меняет статус выполнения задачи
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                  description: id задачи
+                done:
+                  type: boolean
+                  description: статус выполнения
+      responses:
+        200:
+          description: успех
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    text:
+                      type: string
+                    date:
+                      type: string
+                    done:
+                      type: boolean
+        500:
+          description: какая-то ошибка
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        404:
+          description: задача не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /delete/{id}:
+    delete:
+      summary: удаляет указанную задачу
+      parameters:
+        - name: id
+          in: path
+          description: id удаляемой задачи
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: успех
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    text:
+                      type: string
+                    date:
+                      type: string
+                    done:
+                      type: boolean
+        500:
+          description: какая-то ошибка
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        404:
+          description: задача не найдена
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
