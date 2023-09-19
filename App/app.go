@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"task/Config"
+	"task/Controllers/TaskController"
 	"task/Database"
-	"task/Services/TaskService"
 )
 
 func appLoad() error {
@@ -33,9 +33,9 @@ func Start() {
 		return
 	}
 	app := gin.Default()
-	app.POST("/api/createTask", TaskService.CreateTask)
-	app.POST("/api/getTasks", TaskService.GetTasks)
-	app.PATCH("/api/setDone", TaskService.SetDone)
-	app.DELETE("/api/delete/:id", TaskService.Delete)
+	app.POST("/api/createTask", TaskController.CreateTask)
+	app.POST("/api/getTasks", TaskController.GetTasks)
+	app.PATCH("/api/setDone", TaskController.SetDone)
+	app.DELETE("/api/delete/:id", TaskController.Delete)
 	app.Run(Config.Config.Port)
 }
