@@ -7,4 +7,11 @@ services:
       POSTGRES_USER: "testDbUser"
       POSTGRES_PASSWORD: "password"
     ports:
-      - "5434:5432"
+      - "5432"
+  app:
+    image: prod-service:local
+    container_name: task_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
